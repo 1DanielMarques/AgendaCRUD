@@ -6,10 +6,29 @@ import java.util.Date;
  * @author mDanielSE
  */
 public class Contato {
+
     private int id;
     private String nome;
     private int idade;
+    private String sexo;
+    private String profissao;
     private Date dataCadastro;
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public String getProfissao() {
+        return profissao;
+    }
+
+    public void setProfissao(String profissao) {
+        this.profissao = profissao;
+    }
 
     public int getId() {
         return id;
@@ -42,7 +61,5 @@ public class Contato {
     public void setDataCadastro(Date dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
-    
-    
-    
+
 }
