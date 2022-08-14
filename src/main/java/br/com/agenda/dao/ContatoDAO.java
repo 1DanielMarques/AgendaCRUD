@@ -16,7 +16,7 @@ import java.util.List;
 public class ContatoDAO {
 
     // Classe de regra de negocio
-    public void save(Contato contato) {
+    public void create(Contato contato) {
         String sql = "INSERT INTO contatos(nome,idade,sexo,profissao,dataCadastro) "
                 + " VALUES (?,?,?,?,?)";
 
@@ -51,7 +51,7 @@ public class ContatoDAO {
         }
     }
 
-    public List<Contato> getContatos() {
+    public List<Contato> read() {
         String sql = "SELECT * FROM contatos";
 
         List<Contato> contatos = new ArrayList<Contato>();
@@ -118,6 +118,35 @@ public class ContatoDAO {
 
             pstm.execute();
             System.out.println("---ATUALIZADO COM SUCESSO!---");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (pstm != null) {
+                    pstm.close();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    // Delete by id
+    public void delete(int id) throws Exception {
+        String sql = "DELETE FROM contatos WHERE id = ? ";
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySQL();
+            pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, id);
+
+            pstm.execute();
+            System.out.println("---EXCLUÍDO COM SUCESSO!---");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
