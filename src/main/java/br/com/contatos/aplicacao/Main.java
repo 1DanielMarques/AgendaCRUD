@@ -14,9 +14,10 @@ public class Main {
     public static void main(String[] args) throws Exception {
         ContatoDAO contatoDao = new ContatoDAO();
         Scanner sc = new Scanner(System.in);
-        int opcao, idade, id;
+        int opcao, idade, id, verificaResposta, verificaId;
         String nome, sexo, profissao, aux, opcaoDelete;
         Contato contato = new Contato();
+        boolean existe;
         do {
 
             System.out.println("1 - Salvar contato");
@@ -58,9 +59,23 @@ public class Main {
                     }
                     break;
                 case 3:
+                    verificaId = 0;
+                    existe = false;
                     System.out.println("---ATUALIZAR CONTATO---");
-                    System.out.print("Informe o ID do Contato: ");
-                    id = sc.nextInt();
+                    do {
+                        System.out.print("Informe o ID do Contato: ");
+                        id = sc.nextInt();
+                        for (Contato c : contatoDao.read()) {
+                            if (c.getId() == id) {
+                                existe = true;
+                                verificaId = 1;
+                                break;
+                            }
+                        }
+                        if (!existe) {
+                            System.out.println("ID INCORRETO");
+                        }
+                    } while (verificaId != 1);
                     System.out.print("NOME: ");
                     aux = sc.nextLine();
                     nome = sc.nextLine();
@@ -80,19 +95,41 @@ public class Main {
                     contatoDao.update(contato);
                     break;
                 case 4:
+                    verificaResposta = 0;
+                    verificaId = 0;
+                    existe = false;
                     System.out.println("---EXCLUIR CONTATO---");
-                    System.out.print("Informe o ID do Contato: ");
-                    id = sc.nextInt();
-                    System.out.println("TEM CERTEZA QUE DESJA EXCLUIR O CONTATO? S/N");
-                    opcaoDelete = sc.next();
-                    if (opcaoDelete.equals("S") || opcaoDelete.equals("s")) {
-                        contatoDao.delete(id);
-                    } else {
-                        System.out.println("---OPERAÇÃO CANCELADA---");
-                    }
+                    do {
+                        System.out.print("Informe o ID do Contato: ");
+                        id = sc.nextInt();
+                        for (Contato c : contatoDao.read()) {
+                            if (c.getId() == id) {
+                                existe = true;
+                                verificaId = 1;
+                                break;
+                            }
+                        }
+                        if (!existe) {
+                            System.out.println("ID INCORRETO");
+                        }
+                    } while (verificaId != 1);
+
+                    do {
+                        System.out.println("TEM CERTEZA QUE DESJA EXCLUIR O CONTATO? S/N");
+                        opcaoDelete = sc.next();
+                        if (opcaoDelete.equals("S") || opcaoDelete.equals("s")) {
+                            contatoDao.delete(id);
+                            verificaResposta = 1;
+                        } else if (opcaoDelete.equals("N") || opcaoDelete.equals("n")) {
+                            verificaResposta = 1;
+                            System.out.println("---OPERAÇÃO CANCELADA---");
+                        } else {
+                            System.out.println("INFORME |S| OU |N|");
+                        }
+                    } while (verificaResposta != 1);
+
                     break;
             }
         } while (opcao != 9);
     }
-
 }
