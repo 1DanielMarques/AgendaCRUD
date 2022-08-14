@@ -14,10 +14,11 @@ public class Main {
     public static void main(String[] args) throws Exception {
         ContatoDAO contatoDao = new ContatoDAO();
         Scanner sc = new Scanner(System.in);
-        int opcao, idade;
-        String nome, sexo, profissao, aux;
-
+        int opcao, idade, id;
+        String nome, sexo, profissao, aux, opcaoDelete;
+        Contato contato = new Contato();
         do {
+
             System.out.println("1 - Salvar contato");
             System.out.println("2 - Mostrar contatos");
             System.out.println("3 - Atualizar contato");
@@ -26,16 +27,15 @@ public class Main {
             opcao = sc.nextInt();
             switch (opcao) {
                 case 1:
-                    Contato contato = new Contato();
-                    System.out.print("Informe o nome: ");
+                    System.out.println("---SALVAR CONTATO---");
+                    System.out.print("NOME: ");
                     aux = sc.nextLine();
                     nome = sc.nextLine();
-
-                    System.out.print("Idade: ");
+                    System.out.print("IDADE: ");
                     idade = sc.nextInt();
-                    System.out.print("Sexo F/M: ");
+                    System.out.print("SEXO F/M: ");
                     sexo = sc.next();
-                    System.out.print("Profissao: ");
+                    System.out.print("PROFISSÃO: ");
                     aux = sc.nextLine();
                     profissao = sc.nextLine();
                     contato.setNome(nome);
@@ -49,26 +49,47 @@ public class Main {
                 case 2:
                     for (Contato c : contatoDao.read()) {
                         System.out.println("ID: " + c.getId());
-                        System.out.println("Nome: " + c.getNome());
-                        System.out.println("Idade: " + c.getIdade());
-                        System.out.println("Sexo: " + c.getSexo());
-                        System.out.println("Profissao: " + c.getProfissao());
-                        System.out.println("Data de Cadastro: " + c.getDataCadastro());
-                        System.out.println("----------------------------------------");
+                        System.out.println("NOME: " + c.getNome());
+                        System.out.println("IDADE: " + c.getIdade());
+                        System.out.println("SEXO: " + c.getSexo());
+                        System.out.println("PROFISSÃO: " + c.getProfissao());
+                        System.out.println("DATA DE CADASTRO: " + c.getDataCadastro());
+                        System.out.println("------------------------------------");
                     }
                     break;
                 case 3:
-                    Contato c1 = new Contato();
-                    c1.setNome("Maria Gabriela");
-                    c1.setIdade(27);
-                    c1.setSexo("F");
-                    c1.setProfissao("Software Engineer");
-                    c1.setDataCadastro(new Date());
-                    c1.setId(27);
-                    contatoDao.update(c1);
+                    System.out.println("---ATUALIZAR CONTATO---");
+                    System.out.print("Informe o ID do Contato: ");
+                    id = sc.nextInt();
+                    System.out.print("NOME: ");
+                    aux = sc.nextLine();
+                    nome = sc.nextLine();
+                    System.out.print("IDADE: ");
+                    idade = sc.nextInt();
+                    System.out.print("SEXO F/M: ");
+                    sexo = sc.next();
+                    System.out.print("PROFISSÃO: ");
+                    aux = sc.nextLine();
+                    profissao = sc.nextLine();
+                    contato.setNome(nome);
+                    contato.setIdade(idade);
+                    contato.setSexo(sexo);
+                    contato.setProfissao(profissao);
+                    contato.setDataCadastro(new Date());
+                    contato.setId(id);
+                    contatoDao.update(contato);
                     break;
                 case 4:
-                    contatoDao.delete(27);
+                    System.out.println("---EXCLUIR CONTATO---");
+                    System.out.print("Informe o ID do Contato: ");
+                    id = sc.nextInt();
+                    System.out.println("TEM CERTEZA QUE DESJA EXCLUIR O CONTATO? S/N");
+                    opcaoDelete = sc.next();
+                    if (opcaoDelete.equals("S") || opcaoDelete.equals("s")) {
+                        contatoDao.delete(id);
+                    } else {
+                        System.out.println("---OPERAÇÃO CANCELADA---");
+                    }
                     break;
             }
         } while (opcao != 9);

@@ -146,7 +146,7 @@ public class ContatoDAO {
             pstm.setInt(1, id);
 
             pstm.execute();
-            System.out.println("---EXCLUÍDO COM SUCESSO!---");
+            System.out.println("---EXCLUÍDO COM SUCESSO---");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
