@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class ContatoDAO {
             pstm.setDate(5, new Date(contato.getDataCadastro().getTime()));
 
             pstm.execute();
-            System.out.println("SALVO COM SUCESSO");
+            System.out.println("---SALVO COM SUCESSO---");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -97,4 +98,39 @@ public class ContatoDAO {
 
     }
 
+    public void update(Contato contato) throws Exception {
+
+        String sql = "UPDATE contatos SET nome = ?, idade = ?, sexo = ?, profissao = ?, dataCadastro = ? "
+                + " WHERE id = ?";
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        try {
+            // Criar conexao
+            conn = ConnectionFactory.createConnectionToMySQL();
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, contato.getNome());
+            pstm.setInt(2, contato.getIdade());
+            pstm.setString(3, contato.getSexo());
+            pstm.setString(4, contato.getProfissao());
+            pstm.setDate(5, new Date(contato.getDataCadastro().getTime()));
+            pstm.setInt(6, contato.getId());
+
+            pstm.execute();
+            System.out.println("---ATUALIZADO COM SUCESSO!---");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (pstm != null) {
+                    pstm.close();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
 }

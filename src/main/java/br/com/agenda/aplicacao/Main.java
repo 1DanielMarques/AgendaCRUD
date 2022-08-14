@@ -10,13 +10,13 @@ import java.util.Scanner;
  * @author mDanielSE
  */
 public class Main {
-
-    public static void main(String[] args) {
+    
+    public static void main(String[] args) throws Exception {
         ContatoDAO contatoDao = new ContatoDAO();
         Scanner sc = new Scanner(System.in);
         int opcao, idade;
         String nome, sexo, profissao, aux;
-
+        
         do {
             System.out.println("1 - Salvar contato");
             System.out.println("2 - Ler contatos");
@@ -30,7 +30,7 @@ public class Main {
                     System.out.print("Informe o nome: ");
                     aux = sc.nextLine();
                     nome = sc.nextLine();
-
+                    
                     System.out.print("Idade: ");
                     idade = sc.nextInt();
                     System.out.print("Sexo F/M: ");
@@ -43,8 +43,9 @@ public class Main {
                     contato.setSexo(sexo);
                     contato.setProfissao(profissao);
                     contato.setDataCadastro(new Date());
-
+                    
                     contatoDao.save(contato);
+                    
                     break;
                 case 2:
                     for (Contato c : contatoDao.getContatos()) {
@@ -56,18 +57,26 @@ public class Main {
                         System.out.println("Data de Cadastro: " + c.getDataCadastro());
                         System.out.println("----------------------------------------");
                     }
-
+                    
                     break;
                 case 3:
-
+                    Contato c1 = new Contato();
+                    c1.setNome("Maria Gabriela");
+                    c1.setIdade(27);
+                    c1.setSexo("F");
+                    c1.setProfissao("Software Engineer");
+                    c1.setDataCadastro(new Date());
+                    c1.setId(27);
+                    contatoDao.update(c1);
+                    
                     break;
                 case 4:
-
+                    
                     break;
-
+                
             }
-
+            
         } while (opcao != 9);
     }
-
+    
 }
