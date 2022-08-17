@@ -11,7 +11,10 @@ https://user-images.githubusercontent.com/100451032/184933209-1d4bdac0-9d11-4911
 * [Java](https://www.oracle.com/java/technologies/downloads/#jdk18-windows) - Linguagem de programação
 * [MySQL](https://www.mysql.com/) - Banco de Dados
 
-## Author
+## Conhecimentos adquiridos <br>
+Pude entender o funcionamento de um CRUD completo, como conectar com o banco de dados, como manipular os dados, além de conceitos de ``try catch``, separar em classes específicas como ``ConnectionFactory`` e a classe ``DAO``.
+
+## Autor
 * **Daniel Marques**
 
 
